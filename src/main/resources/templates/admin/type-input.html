@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>分类新增</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css">
+  <!-- semantic UI -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="asserts/vendor/bootstrap/css/bootstrap.min.css" th:href="@{/asserts/vendor/bootstrap/css/bootstrap.min.css}">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="../static/asserts/vendor/font-awesome/css/font-awesome.min.css" th:href="@{/asserts/vendor/font-awesome/css/font-awesome.min.css}">
+  <!-- Custom Font Icons CSS-->
+  <link rel="stylesheet" href="../static/asserts/css/font.css" th:href="@{/asserts/css/font.css}">
+  <!-- Google fonts - Muli-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="../static/asserts/css/style.default.css" id="theme-stylesheet" th:href="@{/asserts/css/style.default.css}">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="../static/asserts/css/custom.css" th:href="@{/asserts/css/custom.css}">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="../static/asserts/img/favicon.ico" th:href="@{/asserts/img/favicon.ico}">
+  <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+<header class="header">
+  <nav class="navbar navbar-expand-lg">
+    <div class="search-panel">
+      <div class="search-inner d-flex align-items-center justify-content-center">
+        <div class="close-btn">Close <i class="fa fa-close"></i></div>
+        <form id="searchForm" action="#">
+          <div class="form-group">
+            <input type="search" name="search" placeholder="What are you searching for...">
+            <button type="submit" class="submit">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+      <div class="navbar-header">
+        <!-- Navbar Header--><a th:href="@{/admin/index}" class="navbar-brand">
+        <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Dark</strong><strong>Admin</strong></div>
+        <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div></a>
+        <!-- Sidebar Toggle Btn-->
+        <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+      </div>
+      <div class="right-menu list-inline no-margin-bottom">
+        <!-- Log out               -->
+        <div class="list-inline-item logout">                   <a id="logout" th:href="@{/admin/logout}" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="d-flex align-items-stretch">
+  <!-- Sidebar Navigation-->
+  <nav id="sidebar">
+    <!-- Sidebar Header-->
+    <div class="sidebar-header d-flex align-items-center">
+      <div class="avatar"><img src="../static/asserts/img/avatar-6.jpg" th:src="@{${session.user.avatar}}" alt="..." class="img-fluid rounded-circle"></div>
+      <div class="title">
+        <h1 th:text="${session.user.nickname}" class="h5">Mark Stephen</h1>
+      </div>
+    </div>
+    <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+    <ul class="list-unstyled">
+      <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-padnote"></i>博客管理 </a>
+        <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+          <li><a th:href="@{/admin/blogs}" href="#">博客列表</a></li>
+          <li><a th:href="@{/admin/blogs/input}" href="#">博客发布</a></li>
+        </ul>
+      </li>
+      <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>分类管理 </a>
+        <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+          <li><a th:href="@{/admin/types}" href="#">分类列表</a></li>
+          <li><a th:href="@{/admin/types/input}" href="#">分类新增</a></li>
+        </ul>
+      </li>
+      <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-writing-whiteboard"></i>标签管理 </a>
+        <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
+          <li><a th:href="@{/admin/tags}" href="#">标签列表</a></li>
+          <li><a th:href="@{/admin/tags/input}" href="#">标签新增</a></li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+  <!-- Sidebar Navigation end-->
+  <div class="page-content">
+    <div class="page-header">
+      <div class="container-fluid">
+        <h2 class="h5 no-margin-bottom">分类新增</h2>
+      </div>
+    </div>
+    <section class="no-padding-top">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="block">
+              <div class="title"><h2></h2></div>
+              <div class="block-body">
+                <form action="#" th:action="@{/admin/types}" class="form-horizontal" method="post">
+                  <div class="form-group row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                      <P style="color: red;font-size: 20px" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></P>
+                    </div>
+                  </div>
+                  <div class="line"></div>
+                  <div class="form-group row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend"><span class="input-group-text">名称</span></div>
+                          <input name="name" type="text" placeholder="分类名称" required data-msg="Please enter" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer__block block no-margin-bottom">
+        <div class="container-fluid text-center">
+          <p class="no-margin-bottom">Copyright © 2019 HZhou. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+<!-- JavaScript files-->
+<script th:src="@{/asserts/vendor/jquery/jquery.min.js}" src="../static/asserts/vendor/jquery/jquery.min.js"></script>
+<script th:src="@{/asserts/vendor/popper.js/umd/popper.min.js}" src="../static/asserts/vendor/popper.js/umd/popper.min.js"> </script>
+<script th:src="@{/asserts/vendor/bootstrap/js/bootstrap.min.js}" src="../static/asserts/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script th:src="@{/asserts/vendor/jquery.cookie/jquery.cookie.js}" src="../static/asserts/vendor/jquery.cookie/jquery.cookie.js"> </script>
+<script th:src="@{/asserts/vendor/chart.js/Chart.min.js}" src="../static/asserts/vendor/chart.js/Chart.min.js"></script>
+<script th:src="@{/asserts/vendor/jquery-validation/jquery.validate.min.js}" src="../static/asserts/vendor/jquery-validation/jquery.validate.min.js"></script>
+<script th:src="@{/asserts/js/front.js}" src="../static/asserts/js/front.js"></script>
+<script src="../static/asserts/js/charts-home.js" th:src="@{/asserts/js/charts-home.js}"></script>
+</body>
+</html>

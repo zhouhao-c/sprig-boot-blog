@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/my.css" th:href="@{/css/my.css}">
+</head>
+<body>
+<div>
+    <!--导航-->
+    <div class="ui inverted vertical masthead center aligned segment m-shadow-small">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu stackable">
+                <a class="menu toggle toc item">
+                    <i class="sidebar icon"></i>
+                </a>
+                <a class="item" th:href="@{/}">首页</a>
+                <a class="item" th:href="@{/types/-1}">分类</a>
+                <a class="item" th:href="@{/tags/-1}">标签</a>
+                <a class="item" th:href="@{/archives}">归档</a>
+                <a class="item" th:href="@{/about}">关于我</a>
+                <div class="right item">
+                    <form name="search" th:action="@{/search}" target="_blank" method="post">
+                        <div class="ui icon input">
+                            <input type="text" name="query" placeholder="Search....." th:value="${query}">
+                            <i onclick="document.forms['search'].submit" class="search link icon"></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--中间内容 -->
+    <div class="m-padded-tb-big m-container-small">
+        <div class="ui container">
+            <div class="ui top attached segment">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <h3 class="ui teal header">搜索结果</h3>
+                    </div>
+                    <div class="right aligned column">
+                        共<h3 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}">14</h3>个
+                    </div>
+                </div>
+            </div>
+            <div class="ui top attached teal segment">
+                <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
+                    <div class="ui middle aligned mobile reversed stackable grid">
+                        <div class="eleven wide column">
+                            <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">SpringBoot</a></h3>
+                            <P class="m-text" th:text="|${blog.description}......|">它使用 “习惯优于配置” （项目中存在大量的配置，此外还内置一个
+                                习惯性的配置，让你无须）的理念让你的项目快速运行起来</P>
+                            <div class="ui grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="https://unsplash.it/100/100/?image=1005" th:src="@{${blog.user.avatar}}" class="ui avatar image">
+                                            <div class="content"><a href="" class="header" th:text="${blog.user.nickname}">周浩</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2019-10-30</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i><span th:text="${blog.views}">123</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="" target="_blank"
+                                       class="ui teal basic label m-padded-mini m-text-thin" th:text="${blog.type.name}">认知升级</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="five wide column">
+                            <a href="" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                <img src="https://unsplash.it/800/450/?image=1005" th:src="@{${blog.firstPicture}}" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <a th:href="@{/(page=${page.number}-1)}" th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                    </div>
+                    <div class="right aligned column">
+                        <a th:href="@{/(page=${page.number}+1)}" th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/nmp/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<script>
+
+</script>
+</body>
+</html>
