@@ -6,8 +6,10 @@ import com.chinasoft.blog.po.User;
 import com.chinasoft.blog.service.BlogService;
 import com.chinasoft.blog.service.TagService;
 import com.chinasoft.blog.service.TypeService;
+import com.chinasoft.blog.util.FileUpload;
 import com.chinasoft.blog.vo.BlogQuery;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,9 +17,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 @Controller
 @RequestMapping("/admin")
@@ -92,5 +98,30 @@ public class BlogController {
             attributes.addFlashAttribute("msg","操作成功");
         }
         return REDIRECT_LIST;
+    }
+    @RequestMapping("/imageUpload")
+    public void imageUpload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file,
+                            HttpServletRequest request, HttpServletResponse response){
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter wirte = null;
+        JSONObject json = new JSONObject();
+        try {
+            wirte = response.getWriter();
+            //文件存放的路径
+            String path = request.getSession().getServletContext().getRealPath("upload");
+            String url = "http://localhost:8080"
+                    + request.getContextPath()
+                    + "//upload//"
+                    + FileUpload.upload(request, file, path);
+            json.put("success", 1);
+            json.put("message", "hello");
+            json.put("url", url);
+        } catch (Exception e) {
+        }finally{
+            wirte.print(json);
+            wirte.flush();
+            wirte.close();
+        }
     }
 }
