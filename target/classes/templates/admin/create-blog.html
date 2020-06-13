@@ -138,9 +138,13 @@
                       <div class="form-group row">
                         <label class="col-sm-1 form-control-label" style="font-size: 25px">内容:</label>
                         <div class="col-sm-9">
-                          <div id="md-content"style="z-index: 1 !important;">
+                          <div id="md-content" style="z-index: 1 !important;">
                             <textarea class="form-control" rows="40" name="content" th:text="*{content}" required data-msg="Please enter!">
                             </textarea>
+                            <div class="editormd-file-input">
+                              <input type="file" name="editormd-image-file" accept="image/*" />
+                              <input type="submit" value="本地上传" />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -263,6 +267,9 @@
           height  : 640,
           syncScrolling : "single",
           // path    : "../static/lib/editormd/lib/"
+          imageUpload : true,
+          imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+          imageUploadURL : "/admin/imageUpload",
           path    : "/lib/editormd/lib/"
         });
 

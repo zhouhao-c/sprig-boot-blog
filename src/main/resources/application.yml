@@ -11,3 +11,7 @@ spring:
     active: dev
 
 # comment.avatar: /images/avatar.jpg
+server:
+  servlet:
+    session:
+      timeout: PT60M
