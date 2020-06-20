@@ -109,7 +109,8 @@ public class BlogController {
         try {
             wirte = response.getWriter();
             //文件存放的路径
-            String path = request.getSession().getServletContext().getRealPath("upload");
+//            String path = request.getSession().getServletContext().getRealPath("upload");
+            String path = "D:\\IDEAworkspace\\blog-image\\upload";
             String url = "http://localhost:8080"
                     + request.getContextPath()
                     + "//upload//"

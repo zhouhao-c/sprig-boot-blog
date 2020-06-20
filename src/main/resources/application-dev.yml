@@ -8,6 +8,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+file:
+  accessPath: /upload/
+  staticAccessPath: /upload/**
+  uploadFolder: D:/IDEAworkspace/blog-image/upload/
 #server:
 #  servlet:
 #    context-path: /crud-dev

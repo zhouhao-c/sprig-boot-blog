@@ -1,11 +1,13 @@
 package com.chinasoft.blog.config;
 
 import com.chinasoft.blog.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,6 +17,11 @@ import java.util.Locale;
 
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
+    @Value("${file.staticAccessPath}")
+    private String staticAccessPath;
+    @Value("${file.uploadFolder}")
+    private String uploadFolder;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/admin/**")
@@ -55,4 +62,9 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
         }
     }
+
+     @Override
+     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+         registry.addResourceHandler(staticAccessPath).addResourceLocations("file:" + uploadFolder);
+     }
 }
